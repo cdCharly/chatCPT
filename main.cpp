@@ -2,7 +2,7 @@
 // Created by Charly CATIN--RICO on 11/03
 //
 // CHATBOT assez basique pour comprndre le fonctionnement d'un réseau de neuronnes
-
+//TODO j'aimerai ajouter des mathématiques pour qu'il comprenne des calculs de base (+ - = * / ** sqrt)
 #include <iostream>
 #include <string>
 #include <vector>
