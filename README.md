@@ -1,2 +1,5 @@
 # chatCPT
-chatbot nul ragebait 67
+blageur
+les topics traités sont très basiques
+pas de mémoire
+ragebaitable
