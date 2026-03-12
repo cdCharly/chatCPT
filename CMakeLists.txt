@@ -5,4 +5,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(chatbot
         main.cpp
-        intents.h)
+        intents.h
+        intentsGemini.h)

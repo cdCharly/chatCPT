@@ -3,6 +3,7 @@
 //
 // CHATBOT assez basique pour comprndre le fonctionnement d'un réseau de neuronnes
 //TODO j'aimerai ajouter des mathématiques pour qu'il comprenne des calculs de base (+ - = * / ** sqrt)
+// ajouter
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +12,8 @@
 #include <cstdlib> // Pour rand()
 #include<cmath>
 #include <fstream>
-#include "intents.h"
+//#include "intents.h"
+#include "intentsGemini.h"
 
 using namespace std;
 
@@ -107,7 +109,7 @@ double sigmoide(double x) {
 }
 
 
-
+// initialisation du cerveau,
 NeuralNetwork initNetwork(int inputSize, int hiddenSize, int outputSize) {
     NeuralNetwork net;
 
@@ -116,33 +118,32 @@ NeuralNetwork initNetwork(int inputSize, int hiddenSize, int outputSize) {
         Neuron n;
         n.value = 0.0;
         n.bias = randomWeight();
-        // Chaque neurone caché est connecté à TOUTES les entrées.
-        // -> Faire une boucle 'inputSize' fois pour ajouter des randomWeight() dans n.weights
+
+        // mettre un poids au hasard pour chaque neurone de la couche cachée
         for (int j = 0; j < inputSize; j++) {
             n.weights.push_back(randomWeight());
         }
 
-        net.hiddenlayer.push_back(n);
+        net.hiddenlayer.push_back(n); // mettre le neuron initialisé dans la couche cachée
     }
 
-    // 2. Initialiser la couche de sortie (outputlayer)
-    // -> Faire exactement la même logique, mais pour 'outputSize' neurones.
+    // initialiser la couche de sortie (outputlayer)
     for (int i = 0; i < outputSize; i++) {
-        Neuron nO;
+        Neuron nO; // neuron couche output
         nO.value = 0.0;
         nO.bias = randomWeight();
         for (int j = 0; j < hiddenSize; j++) {
             nO.weights.push_back(randomWeight());
         }
-        net.outputlayer.push_back(nO);
+        net.outputlayer.push_back(nO); // ajouter le neuron de sortie à la couche de sortie
     }
 
 
-    return net;
+    return net; // réseau complet
 }
 
 // trajet que l'info fait pour formuler une prediction depuis une input un bag
-vector<double> forwardPass(NeuralNetwork& net, vector<int> input) {
+vector<double> forwardPass(NeuralNetwork& net, vector<int> const &input) {
 
     // partie input | couche cachée
     for (int i = 0; i < net.hiddenlayer.size(); i++) { // parcourir la couche de neurones cachée
@@ -178,9 +179,7 @@ double sigmoideDerivee(double s) {
 
 
 
-
-
-void train(NeuralNetwork& net, vector<int> input, vector<int> target, double learningRate) {
+void train(NeuralNetwork& net, vector<int> const &input, vector<int> const &target, double const learningRate) {
     // ÉTAPE 1 : On fait un Forward Pass pour que chaque neurone
     // ait sa 'value' à jour par rapport à l'entrée
     forwardPass(net, input);
@@ -276,7 +275,7 @@ int main() {
     cout << "--- entrainement de CHATBOT ---" << endl;
     double lr = 0.1;
     int trainingSize = 1000;
-    cout << "combien d'entrainements ? (1000 - 100000):" << endl;
+    cout << "combien d'entrainements ? (1000 (mauvais) - 10000 (bon)):" << endl;
     cin >> trainingSize;
     for (int e = 0; e < trainingSize; e++) {
         for (auto& data : trainingSet) {
@@ -390,7 +389,7 @@ int main() {
     }
 
 
-    /*
+
     // training chatbot
     double learningRate = 0.1;
     int epochs = 100000;
