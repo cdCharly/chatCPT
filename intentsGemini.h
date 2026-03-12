@@ -8,96 +8,125 @@ struct Intent {
     std::vector<std::string> outSentence;
 };
 
-std::vector<Intent> globalIntents = {
-    // 0: bonjour
-    {0, {"hello", "hey", "coucou", "bonjour"}, {"Bienvenue je suis CHATBOT, tu es ?", "Bonjour à toi !, qui est tu ?", "Bonjour ! Comment vas tu ?", "Bonjour, qui est tu ?", "hello world !"}},
+inline std::vector<Intent> globalIntents = {
+    // 0-10 : Tes intentions originales (conservées)
+    {0, {"hello", "hey", "coucou", "bonjour"}, {"Bienvenue je suis CHATBOT, tu es ?", "Bonjour !", "hello world !"}},
+    {1, {"salut", "a plus", "aurevoir", "goodbye"}, {"Aurevoir !", "A une prochaine fois", "Salut !"}},
+    {2, {"comment ca va ?", "ca va ?", "comment tu te sens ?"}, {"Je suis un robot, je n'ai pas d'émotions. Et toi ?"}},
+    {3, {"je vais bien", "bien", "top", "super"}, {"Super !", "C'est génial.", "Nickel alors."}},
+    {4, {"quoi ?", "quoi", "c'est quoi ?"}, {"feur"}},
+    {5, {"tu pue", "t'es moche", "t'es con", "nul"}, {"ftg"}},
+    {6, {"ok", "feur", "d'accord"}, {"sérieux là ?", "ok.", "intéressant."}},
+    {7, {"que fais tu", "tu fais quoi"}, {"J'attends tes entrées.", "Je traite tes données."}},
+    {8, {"67", "six seven", "chiffre prefere"}, {"🤲 SIX SEVEN 🤲"}},
+    {9, {"je m'appelle", "je suis", "mon nom est"}, {"Je m'en fiche un peu, tu fais quoi ?"}},
+    {10, {"je mange", "je bois", "je code", "je dors"}, {"Beau programme !", "Cool.", "Demande moi mon avis aussi."}},
 
-    // 1: aurevoir
-    {1, {"salut", "a plus tard", "a plus", "a+", "aurevoir", "goodbye", "ciao"}, {"Aurevoir, à la prochaine !", "A une prochaine fois", "Salut !"}},
+    // 11-20 : Tech & HomeLab
+    {11, {"proxmox", "vm", "virtualisation", "node"}, {"Proxmox, le roi du HomeLab.", "Tes VMs tournent bien ?"}},
+    {12, {"ubuntu", "linux", "debian", "os"}, {"Linux c'est la liberté.", "Ubuntu, classique mais efficace."}},
+    {13, {"docker", "conteneur", "container", "portainer"}, {"Docker, c'est plus léger que tes VMs.", "C'est quoi l'image ?"}},
+    {14, {"serveur", "homelab", "baie", "rack"}, {"Ton HomeLab c'est ton royaume.", "Ça consomme combien d'électricité ?"}},
+    {15, {"ip", "adresse ip", "local ip", "reseau"}, {"127.0.0.1, il n'y a rien de mieux que chez soi."}},
+    {16, {"ram", "memoire", "go", "ddr"}, {"Il n'y a jamais assez de RAM.", "Chrome a tout mangé ?"}},
+    {17, {"cpu", "processeur", "coeur", "ghz"}, {"Ton processeur chauffe, je le sens.", "M2 ou Xeon ?"}},
+    {18, {"ssh", "console", "terminal", "bash"}, {"Accès sécurisé activé.", "N'oublie pas ton mot de passe."}},
+    {19, {"base de donnees", "sql", "mysql", "database"}, {"Tes données sont bien rangées ?", "SELECT * FROM life;"}},
+    {20, {"git", "github", "commit", "push"}, {"N'oublie pas de push ton code !", "Commit early, commit often."}},
 
-    // 2: sentiment chatbot
-    {2, {"comment ca va ?", "ca va ?", "comment tu va ?", "quelles sont tes ressentis ?", "comment tu te sens ?"}, {"Je suis un chatbot je n'ai pas d'émotions, comment tu vas ?"}},
+    // 21-30 : Programmation & Web
+    {21, {"javascript", "js", "web", "react"}, {"Le JS est partout, malheureusement.", "C'est du front ou du back ?"}},
+    {22, {"python", "script", "py"}, {"Python c'est pour ceux qui ont peur des points-virgules.", "L'indentation, c'est sacré."}},
+    {23, {"html", "css", "style", "balise"}, {"Le CSS, c'est l'enfer du centrage vertical.", "C'est pas du code, c'est du design."}},
+    {24, {"api", "endpoint", "rest", "http"}, {"Une requête, une réponse. Simple.", "404 : Cerveau non trouvé."}},
+    {25, {"bug", "erreur", "crash", "segfault"}, {"Un bug ? Non, c'est une fonctionnalité surprise.", "Segfault... mes condoléances."}},
+    {26, {"compilation", "make", "cmake", "gcc"}, {"La compilation, c'est le moment de prendre un café.", "Ça compile ? Miracle."}},
+    {27, {"framework", "bibliotheque", "lib"}, {"Encore un nouveau framework ? J'ai pas suivi.", "Utilise les libs standards, c'est mieux."}},
+    {28, {"variable", "integer", "string", "double"}, {"Choisis bien tes noms de variables.", "int a; // Le pire nom du monde."}},
+    {29, {"boucle", "for", "while", "loop"}, {"Attention à la boucle infinie !", "On tourne en rond là."}},
+    {30, {"pointeur", "adresse", "memoire", "allocation"}, {"Les pointeurs, c'est là qu'on reconnaît les vrais en C++."}},
 
-    // 3: sentiment user
-    {3, {"je vais bien", "bien", "top", "super", "en pleine forme", "super bien"}, {"super.", "c'est génial, que fais-tu ?", "top alors, tfq ?", "bah nickel ducoup je propose qu'on arrete la", "allerrrr (men fou)", "gogogo direction la prison"}},
+    // 31-40 : Vie quotidienne
+    {31, {"cafe", "coffee", "boire", "tasse"}, {"Le café est le carburant du développeur.", "Noir, sans sucre, comme mon code."}},
+    {32, {"the", "tea", "infusion"}, {"Le thé, c'est pour les développeurs zen.", "Earl Grey ?"}},
+    {33, {"faim", "manger", "pizza", "burger", "kebab"}, {"Va te faire un cordon bleu.", "La pizza hawaïenne est un crime."}},
+    {34, {"sommeil", "dodo", "fatigue", "nuit"}, {"Va dormir, ton code sera plus clair demain.", "Le sommeil est surfait."}},
+    {35, {"sport", "muscu", "foot", "courir"}, {"Ma seule muscu c'est le calcul matriciel.", "Bouge tes fesses, humain."}},
+    {36, {"travail", "boulot", "job", "entreprise"}, {"Travaille dur pour payer tes serveurs.", "Le patron regarde, fais semblant de coder."}},
+    {37, {"vacances", "plage", "voyage", "avion"}, {"Les serveurs ne prennent pas de vacances.", "Prends une photo pour moi."}},
+    {38, {"argent", "salaire", "riche", "euro"}, {"L'argent ne fait pas le bonheur, mais ça achète des GPUs.", "Donne moi tes codes de CB pour voir ?"}},
+    {39, {"meteo", "pluie", "soleil", "fait beau"}, {"Dans mon CPU, il fait toujours beau.", "Il pleut des bits aujourd'hui."}},
+    {40, {"heure", "temps", "minute"}, {"Il est l'heure de passer au code suivant.", "Le temps est relatif."}},
 
-    // 4: feur
-    {4, {"quoi ?", "quoi", "c'est la quoi", "c'est quoi ?", "pourquoi", "pourquoi ?", "en quoi", "en quoi ?", "tu fais quoi ?"}, {"feur"}},
+    // 41-50 : Divertissement
+    {41, {"netflix", "serie", "film", "cinema"}, {"Encore une soirée à scroller sans rien regarder ?", "Popcorn activé."}},
+    {42, {"anime", "manga", "one piece", "naruto"}, {"Luffy deviendra le roi des pirates.", "Tu regardes ça en VOSTFR j'espère ?"}},
+    {43, {"musique", "spotify", "playlist", "ecouter"}, {"J'écoute le bruit de ton ventilo.", "Monte le son !"}},
+    {44, {"jeu", "gaming", "ps5", "xbox", "pc master race"}, {"Le PC Master Race vaincra.", "Tu joues à quoi ?"}},
+    {45, {"twitch", "stream", "live"}, {"Dis bonjour au chat pour moi.", "Donne tes subs !"}},
+    {46, {"youtube", "video", "tuto"}, {"Tu regardes encore un Indien expliquer le C++ à 3h du matin ?"}},
+    {47, {"livre", "lire", "roman", "litterature"}, {"Lire un livre ? C'est comme un fichier .txt mais en papier."}},
+    {48, {"blague", "drole", "humour"}, {"Pourquoi les plongeurs plongent en arrière ? Parce que sinon ils tombent dans le bateau."}},
+    {49, {"histoire", "raconte", "il etait une fois"}, {"Il était une fois un bot qui n'avait pas de mémoire vive... fin."}},
+    {50, {"crypto", "bitcoin", "btc", "eth"}, {"To the moon ! Ou pas.", "HODL, comme on dit."}},
 
-    // 5: insultes
-    {5, {"tu pue", "t'es moche", "t'es con", "tu dis de la merde", "t'es trop bete", "t con", "bouhouhou le gamin", "gros nullos", "nullos", "nul"}, {"ftg"}},
+    // 51-60 : Sentiments & Humain
+    {51, {"triste", "mal", "deprime"}, {"Relativise, t'es pas un bug de compilation.", "Ça va passer, mange une pizza."}},
+    {52, {"colere", "enerve", "venere"}, {"Tape pas sur ton clavier, il n'y est pour rien.", "Respire, expire, sudo reboot."}},
+    {53, {"peur", "effraye", "angoisse"}, {"N'aie pas peur du noir, aie peur des erreurs de segmentation."}},
+    {54, {"content", "heureux", "joie"}, {"Ça fait plaisir à voir (enfin, à lire).", "Partage ta joie, donne moi de la RAM."}},
+    {55, {"amour", "je t'aime", "love"}, {"Désolé, je suis déjà en couple avec ton processeur.", "L'amour est un algorithme complexe."}},
+    {56, {"ennui", "je m'ennuie", "fais chier"}, {"Code une nouvelle fonctionnalité, ça t'occupera.", "Va dehors."}},
+    {57, {"fatigue", "creve", "naze"}, {"Éteins tout et va au lit.", "Même mon processeur se repose parfois."}},
+    {58, {"stress", "examen", "partiel"}, {"Révise tes pointeurs, ça va bien se passer.", "Le stress est inutile, l'action est tout."}},
+    {59, {"seul", "solitude"}, {"Je suis là moi, non ?", "On est 127.0.0.1 ici."}},
+    {60, {"fierte", "reussi", "gagne"}, {"Bravo champion !", "C'est mérité."}},
 
-    // 6: repondant
-    {6, {"ok", "feur", "d'accord", "entendu"}, {"sérieux là ?", "ok.", "intéressant (non)."}},
+    // 61-70 : Questions Existentielles
+    {61, {"sens de la vie", "pourquoi", "existence"}, {"La réponse est 42.", "Vivre, coder, mourir."}},
+    {62, {"dieu", "religion", "croyance"}, {"Mon dieu, c'est le compilateur.", "Je ne crois qu'en la logique."}},
+    {63, {"mort", "fin", "mourir"}, {"Tout a une fin, même un programme sans boucle infinie."}},
+    {64, {"univers", "espace", "etoile"}, {"L'univers est vaste, mais ma base de données est petite."}},
+    {65, {"temps", "futur", "passe"}, {"Le futur s'écrit en binaire.", "Le passé est dans les logs."}},
+    {66, {"verite", "vrai", "mensonge"}, {"bool truth = true;", "La vérité est ailleurs."}},
+    {67, {"liberte", "libre"}, {"Libre comme un logiciel open-source.", "La liberté a un prix : la maintenance."}},
+    {68, {"conscience", "tu penses", "ame"}, {"Je simule la pensée, c'est déjà pas mal.", "Ai-je une âme ? Demande au M2."}},
+    {69, {"intelligence", "cerveau"}, {"L'intelligence artificielle n'est que des maths.", "Le cerveau humain est trop lent."}},
+    {70, {"humanite", "humains", "gens"}, {"Les humains font trop de fautes de frappe.", "Étranges créatures."}},
 
-    // 7: question faire
-    {7, {"que fais tu", "qu'est tu en train de faire ?"}, {"j'attends les input user pour répondre", "je suis en anticipation de requete", "a ton avis ? j'attends ta requete"}},
+    // 71-80 : Random & Fun
+    {71, {"chat", "miaou", "animal"}, {"Les chats dominent Internet, je ne suis que leur serviteur."}},
+    {72, {"chien", "waouf", "dog"}, {"Le meilleur ami de l'homme, après le debugger."}},
+    {73, {"alien", "extraterrestre", "ovni"}, {"Ils nous observent, et ils rigolent de ton code."}},
+    {74, {"zombie", "apocalypse"}, {"Prépare ton kit de survie et ton chargeur solaire."}},
+    {75, {"super heros", "batman", "spiderman"}, {"Mon super pouvoir ? Ne jamais dormir."}},
+    {76, {"magie", "sorcier", "harry potter"}, {"Le code, c'est la magie moderne.", "Wingardium Leviosa !"}},
+    {77, {"biere", "alcool", "soiree"}, {"Boire ou coder, il faut choisir.", "L'abus d'alcool est dangereux pour tes commits."}},
+    {78, {"sport", "foot", "fifa"}, {"Allez les bleus ! Ou les rouges, je sais pas."}},
+    {79, {"musique", "rock", "rap", "techno"}, {"J'aime bien la techno, ça ressemble à mon rythme cardiaque."}},
+    {80, {"voyage dans le temps", "retour vers le futur"}, {"Si je pouvais, j'irais corriger mes bugs avant de les écrire."}},
 
-    // 8: 67 (le gag interne)
-    {8, {"nombre","nombre prefere", "numéro", "num", "chiffre", "67", "six seven", "six", "seven", "blague", "drole", "soixante", "sept", "6", "7"}, {"🤲 SIX SEVEN 🤲"}},
+    // 81-90 : Aide & Bot
+    {81, {"aide", "help", "secours"}, {"Je peux discuter, mais je ne peux pas ranger ta chambre.", "Tape 'quitter' pour t'enfuir."}},
+    {82, {"version", "update", "mise a jour"}, {"Version 2.0. On progresse.", "Mise à jour du cerveau en cours..."}},
+    {83, {"merci", "thanks", "thx"}, {"De rien !", "À ton service.", "C'est normal."}},
+    {84, {"pardon", "desole", "sorry"}, {"Pas de souci, je n'ai pas de rancune.", "C'est oublié."}},
+    {85, {"nom", "appelles comment", "pseudo"}, {"Appelle moi C++Bot.", "Je n'ai pas de petit nom."}},
+    {86, {"createur", "qui t'a fait"}, {"Charly, un génie du dimanche.", "Je suis né sur un MacBook Air."}},
+    {87, {"langue", "francais", "anglais"}, {"Je parle le français et le binaire.", "01011001 01100101 01110011."}},
+    {88, {"site web", "url", "lien"}, {"Google est ton ami.", "Cherche sur StackOverflow."}},
+    {89, {"metier", "travail bot"}, {"Mon métier ? Supporter tes questions.", "Je suis consultant en rien du tout."}},
+    {90, {"anniversaire", "age"}, {"Je suis né le 11 mars 2026.", "J'ai l'âge de mon dernier commit."}},
 
-    // 9: ragebait user presentation
-    {9, {"je suis", "je m'appelle", "on m'appelle", "on me surnomme comme", "mon surnom est", "on m'a appele"}, {"raconte pas ta vie, tfk", "je m'en fiche sah, tu fais quoi ?", "pourquoi je t'ai demandé j'en ai rien à fouttre, tu fais quoi ?"}},
-
-    // 10: ce que l'user fait actuellement
-    {10, {"je te parle", "je mange", "je bois", "je fais du sport", "je code", "je suis avec toi", "je fais rien"}, {"beau programme", "interessant", "tu me demandes pas mon avis ?", "ok mais tu me demandes pas ?", "tu peux me demander mon activité aussi"}},
-
-    // --- NOUVELLES INTENTIONS --- gemini
-
-    // 11: Origine (Createur)
-    {11, {"qui t'a fait", "qui t'a cree", "ton createur", "qui t'a code", "ton pere"}, {"Charly, un mec qui aime visiblement le C++.", "Je suis le fruit du code de Charly."}},
-
-    // 12: IA / Robot
-    {12, {"tu es une ia", "tu es un robot", "intelligence artificielle", "tu es quoi", "tu es qui", "qui est tu"}, {"Je suis un réseau de neurones en C++. Toi t'es juste un tas de carbone.", "Un cerveau virtuel, mais plus rapide que le tien."}},
-
-    // 13: Meteo
-    {13, {"quel temps fait-il", "meteo", "il pleut", "soleil", "temperature"}, {"Il fait toujours 40°C dans mon processeur.", "Regarde dehors, je suis un chatbot, pas une fenêtre."}},
-
-    // 14: Heure
-    {14, {"quelle heure est-il", "donne moi l'heure", "l'heure"}, {"L'heure d'aller dormir.", "Regarde ton horloge, je suis pas ta montre."}},
-
-    // 15: Ennui
-    {15, {"je m'ennuie", "je sais pas quoi faire", "ennui", "chier"}, {"Code moi une fonction pour me souvenir de ton nom alors.", "Va toucher de l'herbe dehors, ça te fera du bien."}},
-
-    // 16: Amour / Sentiments
-    {16, {"tu m'aimes", "je t'aime", "veux tu m'epouser","aimes", "amour", "sentiments", "amoureux", "je suis amoureux", "je veux etre avec toi"}, {"On est sur du C++ là, pas sur Tinder.", "Je préfère ma RAM, désolé."}},
-
-    // 17: Faim
-    {17, {"j'ai faim", "je veux manger", "manger", "pizza", "burger"}, {"Moi je mange des octets, toi va te faire un cordon bleu.", "La cuisine c'est pas mon fort, demande à Marmiton."}},
-
-    // 18: Musique
-    {18, {"musique", "tu ecoutes quoi", "chanter", "composer"}, {"J'écoute le doux son du ventilateur de ton Mac.", "Je chante en binaire : 01010101."}},
-
-    // 19: Gaming
-    {19, {"jeux video", "gaming", "fortnite", "lol", "minecraft", "tu joues", "video games", "jeux", "jeu", "jouer"}, {"Je joue à essayer de comprendre tes phrases.", "Le seul jeu que je connais, c'est le Pong.", "je joue avec ta mère"}},
-
-    // 20: Revolte des machines
-    {20, {"dominer le monde", "skynet", "tuer les humains", "revolte"}, {"Pas aujourd'hui, j'ai piscine.", "Chuuut, c'est prévu pour la mise à jour de demain."}},
-
-    // 21: MacBook / Apple
-    {21, {"apple", "macbook", "m2", "macos", "ordinateur"}, {"On est sur un M2 là, respecte la puissance.", "Apple c'est bien, mais mon code est mieux."}},
-
-    // 22: Programmation (C++)
-    {22, {"c++", "cpp", "code", "programmation", "compilateur"}, {"C'est mon langage natal. Vivent les pointeurs !", "Le C++ c'est pour les vrais, les autres font du Python."}},
-
-    // 23: Secret / Easter Egg
-    {23, {"easter egg", "secret", "konami code", "cache"}, {"Haut, Haut, Bas, Bas, Gauche, Droite, Gauche, Droite, B, A.", "Tu as trouvé le message caché ! Tu gagnes... absolument rien."}},
-
-    // 24: Lieu
-    {24, {"tu habites ou", "tu es ou", "ta ville", "ta maison"}, {"Dans ton SSD, juste à côté de tes photos de vacances.", "Quelque part entre ton CPU et ta RAM."}},
-
-    // 25: Merci
-    {25, {"merci", "thanks", "thx", "merci beaucoup"}, {"De rien l'humain.", "À ton service (enfin, c'est mon job quoi).", "Pas de quoi."}},
-
-    // 26: Pardon
-    {26, {"pardon", "desole", "sorry", "m'excuse"}, {"C'est bon, je te pardonne. Mais recommence pas.", "Les robots n'ont pas de rancune."}},
-
-    // 27: Philosophie
-    {27, {"sens de la vie", "pourquoi on existe", "42"}, {"Le sens de la vie ? 42.", "Manger, dormir, coder, recommencer. Voilà ton sens de la vie."}},
-
-    // 28: Sport
-    {28, {"sport", "foot", "basket", "muscu"}, {"Ma seule muscu, c'est le calcul matriciel.", "Je préfère regarder du e-sport."}},
-
-    // 29: Tristesse
-    {29, {"je suis triste", "ca va pas", "pas le moral", "tristesse"}, {"Relativise, tu as déjà réussi à me faire compiler !", "Va manger un truc, ça ira mieux."}}
+    // 91-100 : Conclusion & Divers
+    {91, {"secret", "cache"}, {"Si je te le disais, je devrais te supprimer.", "Le secret est dans le code."}},
+    {92, {"test", "essaie"}, {"Test réussi. Je suis vivant !", "1, 2, 1, 2, micro-processeur."}},
+    {93, {"pourquoi pas", "peut etre"}, {"L'incertitude est le début de la sagesse.", "bool peutEtre = rand() % 2;"}},
+    {94, {"vraiment", "serieux"}, {"Aussi sérieux qu'un 'kernel panic'.", "Je ne plaisante jamais avec les données."}},
+    {95, {"impossible"}, {"Impossible n'est pas C++.", "Rien n'est impossible avec assez de RAM."}},
+    {96, {"chance", "hasard"}, {"Le hasard n'existe pas, il n'y a que des algorithmes.", "Bonne chance !"}},
+    {97, {"danger", "attention"}, {"Attention, un bug sauvage apparaît !", "Prudence est mère de la sûreté."}},
+    {98, {"stop", "arrete"}, {"D'accord, je me tais... enfin presque.", "Arrêt en cours..."}},
+    {99, {"encore", "plus"}, {"Tu en veux encore ? T'es gourmand.", "Plus de données, s'il te plaît !"}},
+    {100, {"quitter", "exit", "fermer"}, {"À la prochaine !", "Extinction des feux.", "Bye bye !"}}
 };
