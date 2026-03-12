@@ -8,7 +8,7 @@ struct Intent {
     std::vector<std::string> outSentence;
 };
 
-inline std::vector<Intent> globalIntents = {
+std::vector<Intent> globalIntents = {
     // 0-10 : Tes intentions originales (conservées)
     {0, {"hello", "hey", "coucou", "bonjour"}, {"Bienvenue je suis CHATBOT, tu es ?", "Bonjour !", "hello world !"}},
     {1, {"salut", "a plus", "aurevoir", "goodbye"}, {"Aurevoir !", "A une prochaine fois", "Salut !"}},

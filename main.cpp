@@ -281,7 +281,9 @@ int main() {
         for (auto& data : trainingSet) {
             train(cerveau, data.input, data.output, lr);
         }
-    }
+            if (e % 1000 == 0) cout << "Epoch " << e << " terminee." << endl;
+        }
+    cout << "Entrainement fini" << endl;
     cout << "pret -> quitter pour arreter." << endl << endl;
 
     // boucle infinie de conversation
@@ -307,8 +309,8 @@ int main() {
         }
 
         // d. Répondre
-        // reponse si confiance > 50%
-        if (prediction[idGagnant] > 0.5) {
+        // reponse si confiance > 40%
+        if (prediction[idGagnant] > 0.4) {
             vector<string> reponses = globalIntents[idGagnant].outSentence;
             string choix = reponses[rand() % reponses.size()];
             cout << "CHATBOT  : " << choix << " (Confiance: " << (prediction[idGagnant]*100) << "%)" << endl;
